@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 from torch.nn import functional as F
 import PyPDF2
-
+import os
 d_model = 512 # vocab dimenstion
 block_size = 256 # context length
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -169,11 +169,9 @@ class Transformer(nn.Module):
 
 
 if __name__ == "__main__":
-    # with open('input.txt', 'r', encoding='utf-8') as f:
-    #     text = f.read()
     all_books = list()
-    for f in ["Steve Jobs.pdf", "9781405293181.pdf", "Eric-Jorgenson_The-Almanack-of-Naval-Ravikant_Final.pdf"]:
-        reader = PyPDF2.PdfReader("C:\\Users\\sonalimittal\\OneDrive - Microsoft\\Desktop\\Books\\{0}".format(f))
+    for f in os.listdir("data"):
+        reader = PyPDF2.PdfReader(os.path.join("data", f))
         num_pages =  len(reader.pages)
         book_content = [reader.pages[i].extract_text() for i in range(0,num_pages)]
         all_books.append(" ".join(book_content))
