@@ -1,0 +1,2 @@
+torch
+PyPDF2
